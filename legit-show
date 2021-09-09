@@ -1,0 +1,55 @@
+#!/bin/dash
+
+#cat ./legit/commits/$1/$2
+
+str="$*"
+strn=""
+comnum="$(echo $str | cut -d':' -f1)"
+fname="$(echo $str | cut -d':' -f2)"
+
+
+#checks if arg contains a commit number, if none, prints fname from index
+#if commit number exists, checks inside /commits/comnum/ for file to print
+if [ "$comnum" != "$strn" ]
+    then
+    :
+else
+
+#checks fname exists in index
+    if [ -f ".legit/index/$fname" ]
+        then
+        :
+    else
+        echo legit-show: error: ''"'$fname'"'' not found in index
+        exit
+    fi
+
+#prints fname after check
+    cat .legit/index/$fname
+    exit
+fi
+
+#checks fname exists at commit "comnum", before printing
+if [ -f ".legit/commits/$comnum/$fname" ]
+    then
+    cat .legit/commits/$comnum/$fname
+else
+#checks if commit number exists in legit/commits/
+    if [ -d ".legit/commits/$comnum" ]
+        then
+        :
+    else
+        echo legit-show: error: unknown commit ''"'$comnum'"''
+        exit
+    fi
+
+#prints if commit directory exists but file name does not inside commit dir
+    echo legit-show: error: ''"'$fname'"'' not found in commit $comnum
+
+
+
+fi
+
+
+
+

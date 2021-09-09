@@ -1,0 +1,131 @@
+#!/bin/dash
+#if [ -a ".legit" ]
+
+flagcommit0=0
+emptystr=""
+empty=1
+coms=0
+comited=0
+flag=0
+m="-m"
+
+
+#if [ "$(find ./legit/index -mindepth 1)" ] || echo EMPTY
+
+#echo start
+# empty = 0 if there index is contains files
+[ "$(ls -A .legit/index)" ] && empty=0 || empty=1
+
+
+
+
+#if [ "$#" -ne 1 ] || ! [ -d "$1" ]; then
+#  echo "Usage: $0 DIRECTORY" >&2
+#  exit 1
+#fi
+
+if [ "$#" -lt 2 ] 
+then
+  echo "Usage: $0 DIRECTORY" >&2
+  exit 1
+fi
+
+if [ "$1" != "$m" ] 
+then
+  echo "Usage: $0 DIRECTORY" >&2
+  exit 1
+fi
+
+#message becomes all arguments after -m
+#message="$(echo $allargs | cut -d'm' -f2)"
+shift
+allargs="$*"
+message=$allargs
+
+if [ $empty -eq 0 ]
+then
+#echo index is not empty
+
+while [ $flag -le 5 ]
+do
+if [ -d ".legit/commits/$coms" ]
+then 
+#echo think coms exists
+#echo bye
+  coms=$((coms + 1))
+  else
+#  echo c
+if [ $coms -eq 0 ]
+then
+    flagcommit0=1
+fi
+
+
+if [ $flagcommit0 -ne 1 ]
+then
+    coms=$((coms - 1))
+    same=`diff .legit/index .legit/commits/$coms`
+
+
+
+#same=`diff .legit/index .legit/commits/$coms`
+#echo checking $same equal to $emptystr  at com $coms
+if [ "$same" != "$emptystr" ] 
+then
+#  echo not same
+else
+echo nothing to commit
+exit
+fi
+fi
+if [ $flagcommit0 -ne 1 ]
+then
+    coms=$((coms + 1))
+fi
+
+  cp -r .legit/index .legit/commits/$coms
+  echo "Committed as commit $coms"
+#  rm .legit/index/*
+#  echo cleared index
+  
+  if [ -f '.legit/log.txt' ]
+then
+    echo "$coms $message" > .legit/templog.txt
+    cat .legit/log.txt >> .legit/templog.txt
+    cat .legit/templog.txt > .legit/log.txt
+    else
+    echo "$coms $message" >> .legit/log.txt
+fi
+  
+  
+  flag=6
+fi
+done
+
+#echo d
+
+
+
+
+
+
+
+
+
+else
+
+echo nothing to commit
+
+fi
+
+#echo fin
+
+#if [ ls -a -d '.legit' ]
+#then
+#    echo "legit-init: error: .legit already exists"
+#    exit 0
+#fi
+#
+#echo "Initialized empty legit repository in .legit"
+#
+#exit 1

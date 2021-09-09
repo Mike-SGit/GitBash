@@ -1,0 +1,37 @@
+#!/bin/dash
+
+numf=$#
+count=1
+
+#checks if .legit repository exists at current directory - if so, iterates
+#through arguements, if arg exists as file, copies to .legit/index
+if [ ls -a -d '.legit' ]
+then
+
+while [ $count -le $numf ]
+    do
+
+    if [ -e "$1" ]
+        then 
+
+        cp $1 ".legit/index/$1"
+    else
+        echo "legit-add: error: can not open '$1'"
+        exit 1
+    fi
+
+    #shifts positions of all args down by one, ie. $2 becomes $1
+    shift
+    count=$((count + 1))
+done
+
+else
+
+echo "legit-add: error: no .legit directory containing legit repository exists"
+exit
+
+fi
+
+
+
+

@@ -1,0 +1,14 @@
+Date	            Start	Stop	Activity	Comments
+10/07/2019          15:00   17:00   coding      implemented init functionality
+10/07/2019          22:00   23:00   debugging   fixed errors related to dash
+11/07/2019          12:00   16:00   coding      implemented add functionality and partial commit functionality
+11/07/2019          18:30   21:00   coding      completed add function and completed commit function
+12/07/2019          18:00   20:00   debugging   fixed errors related to add and commit fucntion
+13/07/2019          13:00   13:10   coding      implemented log
+14/07/2019          00:15   01:30   coding      implemented legit-show fixed logic errors in legit-add
+14/07/2019          12:15   13:30   debugging   corrected all error messages, made outputs tidy
+14/07/2019          18:15   19:15   coding      implemented index/previous commit comparison
+14/07/2019          19:15   20:15   debugging   tidy code, clafified comments
+14/07/2019          20:15   20:45   testing     made test scripts
+
+

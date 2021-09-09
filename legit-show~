@@ -1,0 +1,61 @@
+#!/bin/dash
+
+#cat ./legit/commits/$1/$2
+
+str="$*"
+strn=""
+comnum="$(echo $str | cut -d':' -f1)"
+fname="$(echo $str | cut -d':' -f2)"
+
+
+#checks if arg contains a commit number
+if [ "$comnum" != "$strn" ]
+then
+:
+else
+
+if [ -f ".legit/index/$fname" ]
+then
+:
+#echo legit-show: error: '$fname' not found in index
+else
+echo legit-show: error: ''"'$fname'"'' not found in index
+#printf 'legit-show: error: ''%s'' not found in index\n' "$fname"
+exit
+fi
+
+
+cat .legit/index/$fname
+exit
+fi
+
+if [ -f ".legit/commits/$comnum/$fname" ]
+then
+cat .legit/commits/$comnum/$fname
+else
+
+if [ -d ".legit/commits/$comnum" ]
+then
+:
+#echo thinks comis exists
+else
+echo legit-show: error: unknown commit ''"'$comnum'"''
+exit
+fi
+
+
+echo legit-show: error: ''"'$fname'"'' not found in commit $comnum
+
+
+
+fi
+
+
+#echo $comnum
+#echo $fname
+#cat .legit/commits/$comnum/$fname
+
+#A="$(echo $str | cut -d' ' -f2)"
+
+#echo `expr substr $str 4 3`   
+
